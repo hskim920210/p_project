@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.personal.khs.model.*;
 import com.personal.khs.service.*;
@@ -22,7 +23,11 @@ public class BoardController {
 	@Autowired
 	Board_InfoInsertService b_iiService;
 	@Autowired
-	SimpleBoardWithUserListService sbwulService;
+	SimpleBoardNameWithUserListService sbnwulService;
+	@Autowired
+	Total_BoardInsertService t_biService;
+	@Autowired
+	Total_BoardSearchByArticle_NumService t_bsba_nService;
 	
 	@GetMapping("/make")
 	public String boardMake(@ModelAttribute("board_info") Board_Info board_info) {
@@ -53,20 +58,34 @@ public class BoardController {
 	}
 	
 	@PostMapping("/writeArticle")
-	public String articleWriteResult(Model model, HttpSession session) {
-		
-		return "board/writeArticle";
+	public String articleWriteResult(Model model, HttpSession session, Total_Board t_b) {
+		int result = (int)t_biService.service(t_b);
+		if ( result == 1 ) {
+			model.addAttribute("result", true);
+			model.addAttribute("t_b", t_b);
+		} else {
+			model.addAttribute("result", false);
+			model.addAttribute("t_b", t_b);
+		}
+		return "board/writeArticleSubmit";
 	}
 	
 	@GetMapping("/{board_id}")
 	public String simpleBoardList(@PathVariable(value="board_id")Integer board_id, Model model) {
-		SimpleBoardWithUser sb = new SimpleBoardWithUser();
+		SimpleBoardNameWithUser sb = new SimpleBoardNameWithUser();
 		sb.setBoard_id(board_id);
-		List<SimpleBoardWithUser> simpleList = (List<SimpleBoardWithUser>)sbwulService.service(sb);
+		List<SimpleBoardNameWithUser> simpleList = (List<SimpleBoardNameWithUser>)sbnwulService.service(sb);
 		model.addAttribute("simpleList", simpleList);
 		model.addAttribute("board_id", board_id);
 		return "board/simpleBoardList";
 	}
 	
-	
+	@GetMapping("/detailArticle/{article_num}")
+	public String detailArticle(@PathVariable(value="article_num")Integer article_num, Model model) {
+		Total_Board t_b_source = new Total_Board();
+		t_b_source.setArticle_num(article_num);
+		Total_Board t_b = (Total_Board)t_bsba_nService.service(t_b_source);
+		model.addAttribute("detailArticle", t_b);
+		return "board/detailArticle";
+	}
 }

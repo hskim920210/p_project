@@ -7,9 +7,12 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.personal.khs.model.*;
+import com.personal.khs.repository.Board_InfoDAO.Board_InfoRowMapper;
 
+@Repository
 public class Total_BoardDAO {
 	private JdbcTemplate jdbcTemplate;
 	
@@ -41,6 +44,12 @@ public class Total_BoardDAO {
 		return this.jdbcTemplate.update(sql,
 				model.getBoard_id(), model.getWriter_id(), model.getWriter_nick(),
 				model.getArticle_title(), model.getArticle_content(), null); 
+	}
+	
+	public Total_Board selectByArticle_Num(Total_Board model) throws Exception {
+		String sql = "select * from total_board where article_num = ?";
+		return this.jdbcTemplate.queryForObject(sql,
+				new Total_BoardRowMapper(), model.getArticle_num());
 	}
 	
 }

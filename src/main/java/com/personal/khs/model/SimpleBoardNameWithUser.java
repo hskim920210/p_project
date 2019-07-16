@@ -2,8 +2,9 @@ package com.personal.khs.model;
 
 import java.util.*;
 
-public class SimpleBoardWithUser {
+public class SimpleBoardNameWithUser {
 	private int board_id;
+	private String board_name;
 	private int article_num;
 	private String writer_id;
 	private String writer_nick;
@@ -14,12 +15,14 @@ public class SimpleBoardWithUser {
 	private int like_count;
 	private int del_pw;
 	
-	public SimpleBoardWithUser() {
+	public SimpleBoardNameWithUser() {
 	}
 
-	public SimpleBoardWithUser(int board_id, int article_num, String writer_id, String writer_nick,
-			String article_title, String article_content, Date write_date, int read_count, int like_count, int del_pw) {
+	public SimpleBoardNameWithUser(int board_id, String board_name, int article_num, String writer_id,
+			String writer_nick, String article_title, String article_content, Date write_date, int read_count,
+			int like_count, int del_pw) {
 		this.board_id = board_id;
+		this.board_name = board_name;
 		this.article_num = article_num;
 		this.writer_id = writer_id;
 		this.writer_nick = writer_nick;
@@ -37,6 +40,14 @@ public class SimpleBoardWithUser {
 
 	public void setBoard_id(int board_id) {
 		this.board_id = board_id;
+	}
+
+	public String getBoard_name() {
+		return board_name;
+	}
+
+	public void setBoard_name(String board_name) {
+		this.board_name = board_name;
 	}
 
 	public int getArticle_num() {
@@ -110,5 +121,5 @@ public class SimpleBoardWithUser {
 	public void setDel_pw(int del_pw) {
 		this.del_pw = del_pw;
 	}
-	
+
 }

@@ -35,7 +35,7 @@
 	</tr>
 	<tr>
 		<th>닉네임(아이디)</th>
-		<td><input type="text" id="writer_nick" value="${ loginUser.user_nick }" readonly="readonly" />(<input type="text" id="writer_id" value="${ loginUser.user_id }" readonly="readonly" />)</td>
+		<td><input type="text" name="writer_nick" maxlength="8" value="${ loginUser.user_nick }" readonly="readonly" />(<input type="text" name="writer_id" maxlength="10" value="${ loginUser.user_id }" readonly="readonly" />)</td>
 	</tr>
 	<tr>
 		<th>내용(500자 이내)</th>

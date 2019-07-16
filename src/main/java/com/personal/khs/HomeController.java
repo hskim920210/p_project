@@ -1,7 +1,6 @@
 package com.personal.khs;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +20,9 @@ public class HomeController {
 	private Board_InfoListService b_ilService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(HttpServletRequest req) {
+	public String home() {
 		List<Board_Info> board_info_list = (List<Board_Info>)b_ilService.service();
 		app.setAttribute("board_info_list", board_info_list);
-		
 		return "home";
 	}
 	

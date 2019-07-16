@@ -2,12 +2,14 @@ package com.personal.khs.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,7 +79,9 @@ public class UserController {
 	
 	@PostMapping("/loginCheck")
 	@ResponseBody
-	public String loginCheck(@RequestBody User user, HttpSession session) {
+	public String loginCheck(@RequestBody User user, HttpSession session, HttpServletResponse res,
+			@CookieValue(value="idSave", required = false)Cookie idSaveCookie) {
+		System.out.println(idSaveCookie == null);
 		// idCheckService로부터 반환되는 유저타입이 null이면 아이디가 존재하지 않음
 		User tableUser = (User)uicService.service(user);
 		if( tableUser == null ) {
@@ -85,6 +89,9 @@ public class UserController {
 		} else {
 			if( tableUser.getUser_pw().trim().equals(user.getUser_pw().trim()) ) {
 				session.setAttribute("loginUser", tableUser);
+				Cookie cookie = new Cookie("idSave", tableUser.getUser_id());
+				res.addCookie(cookie);
+				// System.out.println(cookie.getValue());
 				return "{\"result\" : \"ok\"}";
 			} else {
 				return "{\"result\" : \"noPw\"}";

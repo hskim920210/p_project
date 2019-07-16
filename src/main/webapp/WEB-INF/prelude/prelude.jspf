@@ -11,11 +11,18 @@
 	var isLogin = false;
 
 	function loginCheck() {
+		var idSave = false;
+		if( $("input:checkbox[name='idSave']").is(":checked") == true ) {
+			idSave = true;
+		}
+		
 		var userObject = new Object();
 		userObject.user_id = $("#user_id").val();
 		userObject.user_pw = $("#user_pw").val();
+		userObject.idSave = idSave;
 		// JSON 문서 생성 방법
 		var userJsonObject = JSON.stringify(userObject);
+		// alert(userJsonObject);
 		$.ajax({
 			url : "<%= request.getContextPath() %>/user/loginCheck",
 			type : "post",
