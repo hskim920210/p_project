@@ -36,7 +36,7 @@
 		// 비동기 통신을 하여 isIdCheck가 false인지 true인지 구별한다.
 		$("#idCheckBtn").on("click", function() {
 			var userObject = new Object();
-			userObject.user_id = $("#user_id").val();
+			userObject.user_id = $("#user_id_reg").val();
 			// JSON 문서 생성 방법
 			var userJsonObject = JSON.stringify(userObject);
 			$.ajax({
@@ -95,9 +95,9 @@
 		
 		
 		// 비밀번호 일치 확인 - 1
-		$("#user_pw").on("keyup", function() {
-			var user_pw = $("#user_pw").val();
-			var user_pw_confirm = $("#user_pw_confirm").val();
+		$("#user_pw_reg").on("keyup", function() {
+			var user_pw = $("#user_pw_reg").val();
+			var user_pw_confirm = $("#user_pw_confirm_reg").val();
 			if( user_pw.length > 0 && user_pw.length <= 15 ) {
 				if( user_pw == user_pw_confirm ) {
 					isPwEqual = true;
@@ -111,9 +111,9 @@
 			}
 		});
 		// 비밀번호 일치 확인 - 2
-		$("#user_pw_confirm").on("keyup", function() {
-			var user_pw_confirm = $("#user_pw_confirm").val();
-			var user_pw = $("#user_pw").val();
+		$("#user_pw_confirm_reg").on("keyup", function() {
+			var user_pw_confirm = $("#user_pw_confirm_reg").val();
+			var user_pw = $("#user_pw_reg").val();
 			if( user_pw_confirm.length > 0 && user_pw_confirm.length <= 15 ) {
 				if( user_pw == user_pw_confirm ) {
 					isPwEqual = true;
@@ -179,7 +179,7 @@
 	<tr>
 		<th>아이디</th>
 		<td>
-			<input type="text" id="user_id" name="user_id" placeholder="1~10자리 문자와 숫자를 사용" required>
+			<input type="text" id="user_id_reg" name="user_id" placeholder="1~10자리 문자와 숫자를 사용" required>
 			<button type="button" id="idCheckBtn">중복체크</button>
 		</td>
 	</tr>
@@ -188,11 +188,11 @@
 	</tr>
 	<tr>
 		<th>패스워드</th>
-		<td><input type="password" id="user_pw" name="user_pw" placeholder="1~15자리 문자와 숫자를 사용" required></td>
+		<td><input type="password" id="user_pw_reg" name="user_pw" placeholder="1~15자리 문자와 숫자를 사용" required></td>
 	</tr>
 	<tr>
 		<th>패스워드 확인</th>
-		<td><input type="password" id="user_pw_confirm" name="user_pw_confirm" placeholder="1~15자리 문자와 숫자를 사용" required></td>
+		<td><input type="password" id="user_pw_confirm_reg" name="user_pw_confirm" placeholder="1~15자리 문자와 숫자를 사용" required></td>
 	</tr>
 	<tr>
 		<th colspan="2"><span id="isPwEqual"></span></th>

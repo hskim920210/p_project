@@ -8,13 +8,12 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
 
-	var isLogin = false;
-
 	function loginCheck() {
 		var idSave = false;
 		if( $("input:checkbox[name='idSave']").is(":checked") == true ) {
 			idSave = true;
 		}
+		alert(save_id);
 		
 		var userObject = new Object();
 		userObject.user_id = $("#user_id").val();

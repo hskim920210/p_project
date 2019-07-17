@@ -31,8 +31,12 @@
 	
 	<!-- 스프링 컨테이너에 인터셉터 객체를 생성 -->
 	<!-- 로그인 여부를 인증하기 위한 인터셉터 -->
-	<!-- 
-	<beans:bean id="authCheckInterceptor" class="" />	
-	 -->
+	<beans:bean id="authCheckInterceptor" class="com.personal.khs.interceptor.AuthCheckInterceptor" />
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/**" />
+			<beans:ref bean="authCheckInterceptor" />
+		</interceptor>
+	</interceptors>
 </beans:beans>

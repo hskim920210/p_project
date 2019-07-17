@@ -19,6 +19,7 @@ public class UserIdCheckService {
 		try {
 			result = userDAO.selectById((User)args);
 		} catch (Exception e) {
+			System.out.println("user null");
 			result = null;
 		}
 		return result;

@@ -52,4 +52,19 @@ public class Total_BoardDAO {
 				new Total_BoardRowMapper(), model.getArticle_num());
 	}
 	
+	public int like_CountPlus(Like_Info model) {
+		String sql = "update total_board set like_count = like_count + 1 where article_num = ?";
+		return this.jdbcTemplate.update(sql, model.getArticle_num());
+	}
+	
+	public int like_CountMinus(Like_Info model) {
+		String sql = "update total_board set like_count = like_count - 1 where article_num = ?";
+		return this.jdbcTemplate.update(sql, model.getArticle_num());
+	}
+	
+	public int updateRead_Count(Total_Board model) {
+		String sql = "update total_board set read_count=read_count+1 where article_num=?";
+		return this.jdbcTemplate.update(sql, model.getArticle_num());
+	}
+	
 }

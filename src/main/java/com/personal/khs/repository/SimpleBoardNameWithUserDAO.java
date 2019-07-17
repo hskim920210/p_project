@@ -48,4 +48,20 @@ public class SimpleBoardNameWithUserDAO {
 		return this.jdbcTemplate.query(sql, new SimpleBoardNameWithUserRowMapper(), model.getBoard_id());
 	}
 	
+	public List<SimpleBoardNameWithUser> selectSimpleBoardPaging(int board_id, int page) {
+		String sql = "select s.* from (select * from simpleBoardNameWithUser order by article_num desc) s where board_id = ? limit ?, 5";
+		int startNum = (page-1)*5;
+		List<SimpleBoardNameWithUser> result = this.jdbcTemplate.query(sql,
+				new SimpleBoardNameWithUserRowMapper(), board_id, startNum);
+		
+		return result;
+	}
+	
+	public int selectSimpleBoardCount(int board_id) {
+		int result = 0;
+		String sql = "select count(*) from simpleBoardNameWithUser where board_id=?";
+		result = this.jdbcTemplate.queryForObject(sql, Integer.class, board_id);
+		return result;
+	}
+	
 }

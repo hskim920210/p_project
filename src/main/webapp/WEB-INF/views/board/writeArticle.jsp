@@ -51,6 +51,7 @@
 		<td><input type="hidden" name="board_id" value="${ board_id }"></td>
 	</tr>
 </table>
+<a href="<%= request.getContextPath() %>/board/${ board_id }">게시판 목록으로 돌아가기</a>
 </form>
 </body>
 </html>

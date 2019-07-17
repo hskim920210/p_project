@@ -81,22 +81,49 @@ public class UserController {
 	@ResponseBody
 	public String loginCheck(@RequestBody User user, HttpSession session, HttpServletResponse res,
 			@CookieValue(value="idSave", required = false)Cookie idSaveCookie) {
-		System.out.println(idSaveCookie == null);
-		// idCheckService로부터 반환되는 유저타입이 null이면 아이디가 존재하지 않음
+		
+		String data = null;
+		
 		User tableUser = (User)uicService.service(user);
 		if( tableUser == null ) {
-			return "{\"result\" : \"noId\"}";
-		} else {
-			if( tableUser.getUser_pw().trim().equals(user.getUser_pw().trim()) ) {
-				session.setAttribute("loginUser", tableUser);
-				Cookie cookie = new Cookie("idSave", tableUser.getUser_id());
-				res.addCookie(cookie);
-				// System.out.println(cookie.getValue());
-				return "{\"result\" : \"ok\"}";
-			} else {
-				return "{\"result\" : \"noPw\"}";
-			}
+			data = "{\"result\" : \"noId\"}";
 		}
+		
+		if( tableUser.getUser_pw().trim().equals(user.getUser_pw().trim()) ) {
+			session.setAttribute("loginUser", tableUser);
+			if( user.isIdSave() ) {
+				//Cookie cookie = new Cookie("idSave", tableUser.getUser_id());
+				data =  "{\"result\" : \"ok\", \"rememberID\" : \"yes\",\"save_id\" : \""
+				+ tableUser.getUser_id() +  "\"}";	
+			} else {
+				data =  "{\"result\" : \"ok\", \"rememberID\" : \"no\"}";	
+			}
+		} else {
+			data =  "{\"result\" : \"noPw\", \"rememberID\" : \"no\"}";
+		}
+		
+		return data;
+		
+		
+//		System.out.println(idSaveCookie == null);
+//		// idCheckService로부터 반환되는 유저타입이 null이면 아이디가 존재하지 않음
+//		String data = null;
+//		User tableUser = (User)uicService.service(user);
+//		if( tableUser == null ) {
+//			return "{\"result\" : \"noId\"}";
+//		} else {
+//			if( tableUser.getUser_pw().trim().equals(user.getUser_pw().trim()) ) {
+//				session.setAttribute("loginUser", tableUser);
+//				Cookie cookie = new Cookie("idSave", tableUser.getUser_id());
+//				res.addCookie(cookie);
+//				
+//				// System.out.println(cookie.getValue());
+//				return "{\"result\" : \"ok\"}";
+//			} else {
+//				return "{\"result\" : \"noPw\"}";
+//			}
+//			
+//		}
 	}
 	
 	@PostMapping("/login")

@@ -23,7 +23,10 @@
 	<tr>
 		<th>${ article.article_num }<input type="hidden" name="article_num" value="${ article.article_num }" /></th>
 		<th>${ article.writer_nick }(${ article.writer_id })<input type="hidden" name="writer_nick" value="${ article.writer_nick }" /><input type="hidden" name="writer_id" value="${ article.writer_id }" /></th>
-		<th><a href="<%= request.getContextPath() %>/board/detailArticle/${ article.article_num }">${ article.article_title }()</a><input type="hidden" name="article_title" value="${ article.article_title }" /></th>
+		<th><a href="<%= request.getContextPath() %>/board/detailArticle/${ article.article_num }">
+			${ article.article_title }(<c:forEach items="${ article_NumAndCommentCount }" var="m">
+										<c:if test="${ m.key == article.article_num }">${ m.value }</c:if></c:forEach>)</a>
+			<input type="hidden" name="article_title" value="${ article.article_title }" /></th>
 		<th>${ article.write_date }<input type="hidden" name="write_date" value="${ article.write_date }" /></th>
 		<th>${ article.read_count }<input type="hidden" name="read_count" value="${ article.read_count }" /></th>
 		<th>${ article.like_count }<input type="hidden" name="like_count" value="${ article.like_count }" /></th>
@@ -31,6 +34,14 @@
 </c:forEach>	
 
 </table>
+<jsp:include page="/WEB-INF/paging/boardPaging.jsp" >
+    <jsp:param value="${paging.page}" name="page"/>
+    <jsp:param value="${paging.beginPage}" name="beginPage"/>
+    <jsp:param value="${paging.endPage}" name="endPage"/>
+    <jsp:param value="${paging.prev}" name="prev"/>
+    <jsp:param value="${paging.next}" name="next"/>
+</jsp:include>
+
 <a href="<%= request.getContextPath() %>/board/write/${ board_id }">글 쓰기</a>
 
 </body>
